@@ -1,0 +1,43 @@
+
+<h4><b>Continue to place order</b></h4>
+
+Your Address:
+<% current_user.addresses.each do |address| %>
+  <% if address.primary %>
+    Primary Address: 
+  
+      <% if address.office %>
+         Office:
+      <% else %>
+         Home: 
+      <% end %>  
+
+      <%= address.address_line1%>
+      <%= address.address_line2%>
+      <%= address.city%>
+      <%= address.state%>
+      <%= address.country%>
+      <%= address.pincode%>
+    <br>
+ <% end %>
+<% end %><hr>
+
+<% @cart_items.each do |cartitem| %>
+  <div class="card mb-3" style="width: 50rem;">
+    <div style= "padding: 3%; padding-top: 3%; padding-bottom: 0%">
+      <div class="row">
+        <div class= "col"><%= image_tag cartitem.product.image , style: "width: 50%; height: 60%;"%></div>
+          <div class= "col">
+            <h4><%= cartitem.product.name%></h4>
+            <%= cartitem.product.description%> 
+            <br>Price: <div class="bi bi-currency-rupee"><%= cartitem.total_price%></div>
+          </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div>
+  <h4> Balance: <%= @cart_items.sum(:total_price) %></h4> 
+  <h3><%= button_to "Continue", style:"background-color: yellow"%></h3>
+</div>
